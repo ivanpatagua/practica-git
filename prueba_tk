@@ -1,0 +1,46 @@
+import json
+import tkinter as tk
+
+class Actividad:
+    def __init__(self, id, nombre, destino_id, hora_inicio):
+        self.id = id
+        self.nombre = nombre
+        self.destino_id = destino_id
+        self.hora_inicio = hora_inicio
+    
+    def __str__(self):
+        return f"El destino que seleccionaste es el {self.id}, se llama {self.nombre}, esta ubicado en {self.destino_id} e inicia a las {self.hora_inicio}"
+
+    def a_json(self):
+        return {
+            "tipo": "Actividad",
+            "id": self.id,
+            "nombre": self.nombre,
+            "destino_id": self.destino_id,
+            "hora_inicio": self.hora_inicio
+        }
+
+# Instancia de la clase Actividad
+actividad = Actividad(2, "los nocheros", 5, "2023-07-29T21:00:00")
+
+# Función para mostrar los detalles de la actividad en el cuadro de texto
+def mostrar_detalles():
+    detalles_json = json.dumps(actividad.a_json(), indent=4)
+    text_box.delete("1.0", tk.END)
+    text_box.insert(tk.END, detalles_json)
+
+# Ventana principal
+root = tk.Tk()
+root.title("Detalles de su Actividad")
+
+# Cuadro de texto
+text_box = tk.Text(root, width=50, height=10)
+text_box.pack()
+
+#Botón para mostrar los detalles de la Actividad
+boton_mostrar = tk.Button(root, text="Mostrar Detalles", command=mostrar_detalles, height=2, width=20, font=("Arial", 12))
+boton_mostrar.pack()
+
+
+
+root.mainloop()
